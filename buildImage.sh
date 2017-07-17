@@ -35,4 +35,11 @@ function check_exit {
   fi
 }
 
-docker build -t bidms/debian_base:latest imageFiles && check_exit
+if [ ! -z "$APT_PROXY_URL" ]; then
+  ARGS+="--build-arg APT_PROXY_URL=$APT_PROXY_URL "
+elif [ -e $HOME/.aptproxy ]; then
+  apt_proxy_url=$(cat $HOME/.aptproxy)
+  ARGS+="--build-arg APT_PROXY_URL=$apt_proxy_url "
+fi
+
+docker build $ARGS -t bidms/debian_base:latest imageFiles || check_exit
