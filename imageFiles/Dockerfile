@@ -29,8 +29,8 @@ FROM debian:stretch
 RUN set -x \
   && export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
-  && apt-get dist-upgrade -y \
   && apt-get install -y apt-utils \
+  && apt-get dist-upgrade -y \
   && apt-get install -y inetutils-syslogd man less procps locales sudo \
        tzdata apt-file net-tools dialog vim joe \
   && mv /etc/syslog.conf /etc/syslog.conf.ORIG \
