@@ -39,7 +39,7 @@ RUN set -x \
   && apt-get install -y apt-utils \
   && apt-get dist-upgrade -y \
   && apt-get install -y inetutils-syslogd man less procps locales sudo \
-       tzdata apt-file net-tools dialog vim joe \
+       tzdata apt-file net-tools dialog vim joe wget curl \
   && mv /etc/syslog.conf /etc/syslog.conf.ORIG \
   && echo "$DEFAULT_TIMEZONE" > /etc/timezone \
   && rm -f /etc/localtime \
