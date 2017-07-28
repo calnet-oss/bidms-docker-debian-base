@@ -51,7 +51,9 @@ RUN set -x \
   && cp /etc/joe/joerc /root/.joerc \
   && sed -i "s/ -nobackups\tIf you don't want backup files to be created/-nobackups\tIf you don't want backup files to be created/" /root/.joerc \
   && apt-get clean \
-  && rm -rf /tmp/* /var/tmp/* /core
+  && rm -rf /tmp/* /var/tmp/*
 COPY etc/syslog.conf /etc
 
 RUN rm -f /etc/apt/apt.conf.d/00aptproxy
+
+RUN rm -f /core
