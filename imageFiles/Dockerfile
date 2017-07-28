@@ -29,6 +29,10 @@ FROM debian:stretch
 ARG APT_PROXY_URL=
 RUN if [ ! -z "$APT_PROXY_URL" ]; then echo "Acquire::http::Proxy \"$APT_PROXY_URL\";" > /etc/apt/apt.conf.d/00aptproxy; else echo "not using apt proxy"; fi
 
+ARG DEFAULT_LOCALE=en_US.UTF-8
+ARG DEFAULT_TIMEZONE=America/Los_Angeles
+ARG DEFAULT_TIMEZONE_FILE=/usr/share/zoneinfo/US/Pacific
+
 RUN set -x \
   && export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
@@ -37,14 +41,14 @@ RUN set -x \
   && apt-get install -y inetutils-syslogd man less procps locales sudo \
        tzdata apt-file net-tools dialog vim joe \
   && mv /etc/syslog.conf /etc/syslog.conf.ORIG \
-  && echo "America/Los_Angeles" > /etc/timezone \
+  && echo "$DEFAULT_TIMEZONE" > /etc/timezone \
   && rm -f /etc/localtime \
-  && ln -fs /usr/share/zoneinfo/US/Pacific /etc/localtime \
+  && ln -fs $DEFAULT_TIMEZONE_FILE /etc/localtime \
   && sed -i 's/# en_US ISO-8859-1/en_US ISO-8859-1/' /etc/locale.gen \
   && sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
   && locale-gen \
   && dpkg-reconfigure locales \
-  && update-locale LANG=en_US.UTF-8 \
+  && update-locale LANG=$DEFAULT_LOCALE \
   && sed -i "s/# export LS_OPTIONS='--color=auto'/export LS_OPTIONS='--color=auto'/" /root/.bashrc \
   && sed -i "s/# eval \"\`dircolors\`\"/eval \"\`SHELL=\/bin\/bash dircolors\`\"/" /root/.bashrc \
   && sed -i "s/# alias ls='ls \$LS_OPTIONS'/alias ls='ls \$LS_OPTIONS'/" /root/.bashrc \
