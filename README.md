@@ -2,7 +2,7 @@
 
 This [Docker](http://www.docker.com/) image is the base
 [Debian](http://www.debian.org) image used as the parent image for other
-BIDMS Docker images.
+Berkeley Identity Management Suite Docker images.
 
 The author does not currently publish the image in any public Docker
 repository but a script, described below, is provided to easily create your
