@@ -57,4 +57,4 @@ elif [ -e $HOME/.aptproxy ]; then
   ARGS+="--build-arg APT_PROXY_URL=$apt_proxy_url "
 fi
 
-docker build $ARGS -t bidms/debian_base:latest imageFiles || check_exit
+docker build $ARGS -t bidms/debian_base:buster imageFiles || check_exit

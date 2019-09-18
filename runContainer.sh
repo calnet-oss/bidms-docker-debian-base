@@ -37,4 +37,4 @@ function check_exit {
 
 docker run -ti --rm --name bidms-debian-base \
   $* \
-  bidms/debian_base:latest || check_exit
+  bidms/debian_base:buster || check_exit
