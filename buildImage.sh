@@ -50,6 +50,13 @@ if [ ! -z "$NETWORK" ]; then
   ARGS+="--network $NETWORK "
 fi
 
+if [ -z "$DEBIAN_VERSION" ]; then
+  echo "DEBIAN_VERSION must be set"
+  exit 1
+else
+  ARGS+="--build-arg DEBIAN_VERSION=$DEBIAN_VERSION "
+fi
+
 if [ ! -z "$APT_PROXY_URL" ]; then
   ARGS+="--build-arg APT_PROXY_URL=$APT_PROXY_URL "
 elif [ -e $HOME/.aptproxy ]; then
@@ -57,4 +64,4 @@ elif [ -e $HOME/.aptproxy ]; then
   ARGS+="--build-arg APT_PROXY_URL=$apt_proxy_url "
 fi
 
-docker build $ARGS -t bidms/debian_base:buster imageFiles || check_exit
+docker build $ARGS -t bidms/debian_base:${DEBIAN_VERSION} imageFiles || check_exit

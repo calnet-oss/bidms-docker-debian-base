@@ -35,6 +35,13 @@ function check_exit {
   fi
 }
 
+. ./config.env || check_exit
+
+if [ -z "$DEBIAN_VERSION" ]; then
+  echo "DEBIAN_VERSION must be set"
+  exit 1
+fi
+
 docker run -ti --rm --name bidms-debian-base \
   $* \
-  bidms/debian_base:buster || check_exit
+  bidms/debian_base:${DEBIAN_VERSION} || check_exit

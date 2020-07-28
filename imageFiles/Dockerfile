@@ -24,7 +24,10 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
-FROM debian:buster
+
+# DEBIAN_VERSION must be supplied as a build argument
+ARG DEBIAN_VERSION
+FROM debian:$DEBIAN_VERSION
 
 ARG APT_PROXY_URL=
 RUN if [ ! -z "$APT_PROXY_URL" ]; then echo "Acquire::http::Proxy \"$APT_PROXY_URL\";" > /etc/apt/apt.conf.d/00aptproxy; else echo "not using apt proxy"; fi
