@@ -1,10 +1,10 @@
 ## Purpose
 
-This [Docker](http://www.docker.com/) image is the base
-[Debian](http://www.debian.org) image used as the parent image for other
-Berkeley Identity Management Suite Docker images.
+This container image is the base [Debian](http://www.debian.org) image used
+as the parent image for other Berkeley Identity Management Suite container
+images.
 
-The author does not currently publish the image in any public Docker
+The author does not currently publish the image in any public container
 repository but a script, described below, is provided to easily create your
 own image.
 
@@ -13,7 +13,7 @@ own image.
 The source code, which in this project is primarily shell scripts and the
 Dockerfile, is licensed under the [BSD two-clause license](LICENSE.txt).
 
-## Building the Docker image
+## Building the container image
 
 Build the container image:
 ```
@@ -30,6 +30,8 @@ To run the container interactively (which means you get a shell prompt):
 ```
 ./runContainer.sh
 ```
+
+(All `docker` commands can be replaced with `podman` if you prefer.)
 
 You can exit the container by exiting the bash shell or use `docker stop
 bidms-debian-base`.

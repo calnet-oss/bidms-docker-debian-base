@@ -45,6 +45,11 @@ the argument defaults in the Dockerfile will be used.
 EOF
 fi
 
+if [ -z "$BUILDTIME_CMD" ]; then
+  # Can be overriden in config.env to be buildah instead.
+  BUILDTIME_CMD=docker
+fi
+
 if [ ! -z "$NETWORK" ]; then
   echo "NETWORK=$NETWORK"
   ARGS+="--network $NETWORK "
@@ -64,4 +69,9 @@ elif [ -e $HOME/.aptproxy ]; then
   ARGS+="--build-arg APT_PROXY_URL=$apt_proxy_url "
 fi
 
-docker build $ARGS -t bidms/debian_base:${DEBIAN_VERSION} imageFiles || check_exit
+if [ ! -z "$(echo \"$BUILDTIME_CMD\" | grep buildah)" ]; then
+  build_cmd="$BUILDTIME_CMD build-using-dockerfile"
+else
+  build_cmd="$BUILDTIME_CMD build"
+fi
+$build_cmd $ARGS -t bidms/debian_base:${DEBIAN_VERSION} imageFiles || check_exit

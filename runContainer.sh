@@ -37,11 +37,16 @@ function check_exit {
 
 . ./config.env || check_exit
 
+if [ -z "$RUNTIME_CMD" ]; then
+  # Can be overriden in config.env to be podman instead.
+  RUNTIME_CMD=docker
+fi
+
 if [ -z "$DEBIAN_VERSION" ]; then
   echo "DEBIAN_VERSION must be set"
   exit 1
 fi
 
-docker run -ti --rm --name bidms-debian-base \
+$RUNTIME_CMD run -ti --rm --name bidms-debian-base \
   $* \
   bidms/debian_base:${DEBIAN_VERSION} || check_exit
