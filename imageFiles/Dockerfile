@@ -34,10 +34,11 @@ RUN if [ ! -z "$APT_PROXY_URL" ]; then echo "Acquire::http::Proxy \"$APT_PROXY_U
 
 ARG DEFAULT_LOCALE=en_US.UTF-8
 ARG DEFAULT_TIMEZONE=America/Los_Angeles
-ARG DEFAULT_TIMEZONE_FILE=/usr/share/zoneinfo/US/Pacific
+ARG DEFAULT_TIMEZONE_FILE=/usr/share/zoneinfo/America/Los_Angeles
 
 RUN set -x \
   && export DEBIAN_FRONTEND=noninteractive \
+  && if [ ! -e "$DEFAULT_TIMEZONE_FILE" ]; then echo "$DEFAULT_TIMEZONE_FILE does not exist" >&2 && false; fi \
   && apt-get update \
   && apt-get install -y apt-utils \
   && apt-get dist-upgrade -y \
